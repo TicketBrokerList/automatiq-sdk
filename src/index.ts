@@ -18,6 +18,26 @@ export class AutomaticClient {
     async get_accounts() {
         try {
             const response = await fetch(`${BASE_URL}/sync/api/accounts`, {
+                method: "GET",
+                headers: {
+                    "X-Company-Id": this.company_id,
+                    "X-Api-Token": this.api_token,
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
+            })
+            const json = await response.json();
+            return json;
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
+    }
+
+    async get_accounts_by_id(id: number | string) {
+        try {
+            const response = await fetch(`${BASE_URL}/sync/api/accounts/${id}`, {
+                method: "GET",
                 headers: {
                     "X-Company-Id": this.company_id,
                     "X-Api-Token": this.api_token,
