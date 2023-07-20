@@ -1,3 +1,4 @@
+import { BASE_URL } from "./config";
 
 type AutomaticClientType = {
     company_id: string,
@@ -15,10 +16,20 @@ export class AutomaticClient {
     }
 
     async get_accounts() {
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
-            .then(response => response.json())
-            .then(json => console.log(json))
-        // const movies = await response.json();
-        // console.log(movies);
+        try {
+            const response = await fetch(`${BASE_URL}/sync/api/accounts`, {
+                headers: {
+                    "X-Company-Id": this.company_id,
+                    "X-Api-Token": this.api_token,
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
+            })
+            const json = await response.json();
+            return json;
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
     }
 }
