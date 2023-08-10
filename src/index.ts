@@ -1,5 +1,5 @@
 import { BASE_URL } from "./config";
-import { AccountType, AutomaticClientType } from "./types";
+import { AccountParamsType, AccountParamsWithPaginationType, AccountType, AutomaticClientType } from "./types";
 
 export class AutomaticClient {
 
@@ -12,9 +12,17 @@ export class AutomaticClient {
     }
 
     // accounts apis
-    async get_accounts() {
+    async get_accounts(params?: AccountParamsType) {
+
+        let BASE_URL_UPDATED = `${BASE_URL}/sync/api/accounts`
+        if (params) {
+            const paramsUpdate: any = params
+            const paramsString = new URLSearchParams(paramsUpdate).toString();
+            BASE_URL_UPDATED = `${BASE_URL}/sync/api/accounts?${paramsString}`
+        }
+
         try {
-            const response = await fetch(`${BASE_URL}/sync/api/accounts`, {
+            const response = await fetch(BASE_URL_UPDATED, {
                 method: "GET",
                 headers: {
                     "X-Company-Id": this.company_id,
@@ -26,7 +34,31 @@ export class AutomaticClient {
             const json = await response.json();
             return json;
         } catch (error) {
-            console.log(error)
+            return error;
+        }
+    }
+    async get_accounts_with_pagination(params?: AccountParamsWithPaginationType) {
+
+        let BASE_URL_UPDATED = `${BASE_URL}/sync/api/accounts`
+        if (params) {
+            const paramsUpdate: any = params
+            const paramsString = new URLSearchParams(paramsUpdate).toString();
+            BASE_URL_UPDATED = `${BASE_URL}/sync/api/accounts?${paramsString}`
+        }
+
+        try {
+            const response = await fetch(BASE_URL_UPDATED, {
+                method: "GET",
+                headers: {
+                    "X-Company-Id": this.company_id,
+                    "X-Api-Token": this.api_token,
+                    "Accept": "application/json",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
+            })
+            const json = await response.json();
+            return json;
+        } catch (error) {
             return error;
         }
     }

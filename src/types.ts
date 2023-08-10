@@ -18,3 +18,18 @@ export type AccountType = {
 }
 
 export type AccountsType = AccountType[]
+
+export interface AccountParamsType {
+    bad_creds: boolean,
+    search_term: string,
+    vendor_id: number,
+    password_auto_updated_at: string,
+    inserted_at: string,
+    auto_created: boolean,
+    tags: string
+}
+
+export interface AccountParamsWithPaginationType extends AccountParamsType {
+    page: number,
+    limit: number
+}
