@@ -1,6 +1,6 @@
-const { AutomaticClient } = require('automatiq-sdk');
+const { AutomatiqClient } = require('automatiq-sdk');
 
-const client = new AutomaticClient({
+const client = new AutomatiqClient({
   company_id: '1209',
   api_token: 'GacZr8xvdynGEcXUM7IMreAo23bIKQaW6MXhKquotLZSyYQ-a2EQVOc9OSBPuf9d8RTB'
 });

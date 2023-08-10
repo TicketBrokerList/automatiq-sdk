@@ -1,12 +1,12 @@
 import { BASE_URL } from "./config";
-import { AccountParamsType, AccountParamsWithPaginationType, AccountType, AutomaticClientType, OrderParamsType } from "./types";
+import { AccountParamsType, AccountParamsWithPaginationType, AccountType, AutomatiqClientType, OrderParamsType } from "./types";
 
-export class AutomaticClient {
+export class AutomatiqClient {
 
     company_id: string;
     api_token: string;
 
-    constructor(config: AutomaticClientType) {
+    constructor(config: AutomatiqClientType) {
         this.company_id = config.company_id;
         this.api_token = config.api_token;
     }

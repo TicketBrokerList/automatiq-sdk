@@ -1,4 +1,4 @@
-export type AutomaticClientType = {
+export type AutomatiqClientType = {
     company_id: string,
     api_token: string,
 }
