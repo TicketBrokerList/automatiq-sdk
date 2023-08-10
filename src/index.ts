@@ -1,5 +1,5 @@
 import { BASE_URL } from "./config";
-import { AccountParamsType, AccountParamsWithPaginationType, AccountType, AutomaticClientType } from "./types";
+import { AccountParamsType, AccountParamsWithPaginationType, AccountType, AutomaticClientType, OrderParamsType } from "./types";
 
 export class AutomaticClient {
 
@@ -159,9 +159,15 @@ export class AutomaticClient {
 
     // orders apis
 
-    async get_orders() {
+    async get_orders(params?: OrderParamsType) {
+        let BASE_URL_UPDATED = `${BASE_URL}/sync/api/orders`
+        if (params) {
+            const paramsUpdate: any = params
+            const paramsString = new URLSearchParams(paramsUpdate).toString();
+            BASE_URL_UPDATED = `${BASE_URL}/sync/api/orders?${paramsString}`
+        }
         try {
-            const response = await fetch(`${BASE_URL}/sync/api/orders`, {
+            const response = await fetch(BASE_URL_UPDATED, {
                 method: "GET",
                 headers: {
                     "X-Company-Id": this.company_id,
@@ -302,7 +308,7 @@ export class AutomaticClient {
             return error;
         }
     }
-    async delete_order_proofs(order_id: string | number) {
+    async delete_order_proofs(order_id: string | number, data?: object) {
         try {
             const response = await fetch(`${BASE_URL}sync/api/orders/${order_id}/proofs`, {
                 method: "DELETE",
@@ -312,6 +318,7 @@ export class AutomaticClient {
                     "Accept": "application/json",
                     "Accept-Encoding": "gzip, deflate, br"
                 },
+                body: JSON.stringify(data ? data : null)
             })
             const json = await response.json();
             return json;
